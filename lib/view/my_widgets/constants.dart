@@ -14,7 +14,7 @@ const Color pointer = const Color(0xFFF44336);
 //Images
 AssetImage logoImage = AssetImage("assets/darkBee.png");
 AssetImage eventImage = AssetImage("assets/event.jpg");
-AssetImage homeImage = AssetImage("assets/home.png");
+AssetImage homeImage = AssetImage("assets/home.jpg");
 AssetImage profileImage = AssetImage("assets/profile.jpg");
 
 //Icons

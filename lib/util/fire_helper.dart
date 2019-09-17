@@ -21,8 +21,8 @@ class FireHelper {
     final FirebaseUser user = await auth_instance.createUserWithEmailAndPassword(email: mail, password: pwd);
     // Créer mon user pour l'ajouter dans la bdd
     String uid = user.uid;
-    List<dynamic> followers = [];
-    List<dynamic> following = [uid];
+    List<dynamic> followers = [uid];
+    List<dynamic> following = [];
     Map<String, dynamic> map = {
       keyName: name,
       keySurname: surname,

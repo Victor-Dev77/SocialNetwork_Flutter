@@ -23,16 +23,7 @@ class _UsersState extends State<UsersPage> {
           List<DocumentSnapshot> documents = snapshot.data.documents;
           return NestedScrollView(
               headerSliverBuilder: (BuildContext build, bool scrolled) {
-                return [
-                  SliverAppBar(
-                    pinned: true,
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: MyText("List d'utilisateur", color: baseAccent,),
-                      background: Image(image: eventImage, fit: BoxFit.cover,),
-                    ),
-                    expandedHeight: 150.0,
-                  )
-                ];
+                return [MyAppBar(title: "Liste des utilisateurs", image: eventImage)];
               },
               body: ListView.builder(
                   itemCount: documents.length,

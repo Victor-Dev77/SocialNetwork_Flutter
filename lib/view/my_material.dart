@@ -14,3 +14,4 @@ export 'my_widgets/bar_items.dart';
 export 'my_widgets/button_gradient.dart';
 export 'my_widgets/profile_image.dart';
 export 'my_widgets/follow_button.dart';
+export 'my_widgets/my_app_bar.dart';
