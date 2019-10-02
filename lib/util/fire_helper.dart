@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_social/models/post.dart';
 import 'package:flutter_social/models/user.dart';
 import 'package:flutter_social/view/my_material.dart';
 
@@ -68,6 +69,14 @@ class FireHelper {
     } else {
       me.ref.updateData({keyFollowing: FieldValue.arrayUnion([other.uid])});
       other.ref.updateData({keyFollowers: FieldValue.arrayUnion([me.uid])});
+    }
+  }
+
+  addLike(Post post) {
+    if (post.likes.contains(me.uid)) {
+      post.ref.updateData({keyLikes: FieldValue.arrayRemove([me.uid])});
+    } else {
+      post.ref.updateData({keyLikes: FieldValue.arrayUnion([me.uid])});
     }
   }
 
