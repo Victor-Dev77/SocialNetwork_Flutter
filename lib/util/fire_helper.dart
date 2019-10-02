@@ -104,6 +104,15 @@ class FireHelper {
       fire_user.document(uid).collection("posts").document().setData(map);
     }
   }
+  
+  addComment(DocumentReference ref, String text) {
+    Map<dynamic, dynamic> map = {
+      keyUid: me.uid,
+      keyText: text,
+      keyDate: DateTime.now().millisecondsSinceEpoch.toInt()
+    };
+    ref.updateData({keyComments: FieldValue.arrayUnion([map])});
+  }
 
 
   //STORAGE
