@@ -43,8 +43,21 @@ class FireHelper {
   //DATABASE
   static final data_instance = Firestore.instance;
   final fire_user = data_instance.collection("users");
+  final fire_notif = data_instance.collection("notifications");
 
   Stream<QuerySnapshot> postsFrom(String uid) => fire_user.document(uid).collection("posts").snapshots();
+
+  addNotification(String from, String to, String text, DocumentReference ref, String type) {
+    Map<String, dynamic> map = {
+      keyUid: from,
+      keyText: text,
+      keyType: type,
+      keyRef: ref,
+      keySeen: false,
+      keyDate: DateTime.now().millisecondsSinceEpoch.toInt()
+    };
+    fire_notif.document(to).collection("singleNotif").add(map);
+  }
 
   addUser(String uid, Map<String, dynamic> map) {
     fire_user.document(uid).setData(map);
@@ -69,6 +82,7 @@ class FireHelper {
     } else {
       me.ref.updateData({keyFollowing: FieldValue.arrayUnion([other.uid])});
       other.ref.updateData({keyFollowers: FieldValue.arrayUnion([me.uid])});
+      addNotification(me.uid, other.uid, "${me.surname} a commencé à vous suivre", me.ref, keyFollowers);
     }
   }
 
@@ -77,6 +91,7 @@ class FireHelper {
       post.ref.updateData({keyLikes: FieldValue.arrayRemove([me.uid])});
     } else {
       post.ref.updateData({keyLikes: FieldValue.arrayUnion([me.uid])});
+      addNotification(me.uid, post.userId, "${me.surname} a aimé votre post", post.ref, keyLikes);
     }
   }
 
@@ -105,13 +120,14 @@ class FireHelper {
     }
   }
   
-  addComment(DocumentReference ref, String text) {
+  addComment(DocumentReference ref, String text, String postOwner) {
     Map<dynamic, dynamic> map = {
       keyUid: me.uid,
       keyText: text,
       keyDate: DateTime.now().millisecondsSinceEpoch.toInt()
     };
     ref.updateData({keyComments: FieldValue.arrayUnion([map])});
+    addNotification(me.uid, postOwner, "${me.surname} a commenté votre post", ref, keyComments);
   }
 
 
