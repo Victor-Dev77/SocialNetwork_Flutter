@@ -9,6 +9,9 @@ import 'package:flutter_social/view/tiles/postTitle.dart';
 
 class FeedPage extends StatefulWidget {
 
+  String myId;
+  FeedPage(this.myId);
+
   _FeedState createState() => _FeedState();
 
 }
@@ -49,7 +52,7 @@ class _FeedState extends State<FeedPage> {
   }
 
   setupSub() {
-    sub = FireHelper().fire_user.where(keyFollowers, arrayContains: me.uid).snapshots().listen((datas) {
+    sub = FireHelper().fire_user.where(keyFollowers, arrayContains: widget.myId).snapshots().listen((datas) {
       getUsers(datas.documents);
       datas.documents.forEach((docs) {
         docs.reference.collection("posts").snapshots().listen((post) {

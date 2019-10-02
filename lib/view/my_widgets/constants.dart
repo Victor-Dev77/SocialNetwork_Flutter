@@ -30,6 +30,8 @@ Icon likeEmpty = Icon(Icons.favorite_border);
 Icon likeFull = Icon(Icons.favorite);
 Icon msgIcon = Icon(Icons.message);
 Icon settingsIcon = Icon(Icons.settings);
+Icon followIcon = Icon(Icons.add);
+Icon unfollowIcon = Icon(Icons.cancel);
 
 
 

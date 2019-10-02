@@ -24,12 +24,12 @@ class MyHeader extends SliverPersistentHeaderDelegate {
           (scrolled) ? Container(
             width: 0.0,
             height: 0.0,
-          ) : element("${user.surname} ${user.name}"),
+          ) : element(context, "${user.surname} ${user.name}"),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ProfileImage(urlString: user.imageUrl, onPressed: null),
-              element((user.description == null ? ("Aucune description") : user.description)),
+              element(context, (user.description == null ? ("Aucune description") : user.description)),
             ],
           ),
           Container(
@@ -50,14 +50,20 @@ class MyHeader extends SliverPersistentHeaderDelegate {
     );
   }
 
-  Widget element(String text) {
+  Widget element(BuildContext context, String text) {
     if (user.uid == me.uid) {
       return InkWell(
         onTap: callback,
-        child: MyText(text),
+        child: Container(
+          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 1.25),
+          child: MyText(text),
+        ),
       );
     } else {
-      return MyText(text);
+      return Container(
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 1.25),
+        child: MyText(text),
+      );
     }
   }
 

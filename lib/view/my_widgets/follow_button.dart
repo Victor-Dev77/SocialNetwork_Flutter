@@ -5,10 +5,9 @@ import 'package:flutter_social/view/my_material.dart';
 
 
 
-class FollowButton extends FlatButton {
-
+class FollowButton extends IconButton {
   FollowButton({@required User user}): super (
-    child: MyText(me.following.contains(user.uid) ? "Ne plus suivre" : "Suivre", color: pointer,),
+    icon: me.following.contains(user.uid) ? unfollowIcon : followIcon,
     onPressed: () {
       FireHelper().addFollow(user);
     }

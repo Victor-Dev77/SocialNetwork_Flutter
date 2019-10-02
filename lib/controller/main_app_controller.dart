@@ -76,7 +76,7 @@ class _MainState extends State<MainAppController> {
 
   Widget showPage() {
     switch(index) {
-      case 0: return FeedPage();
+      case 0: return FeedPage(widget.uid);
       case 1: return UsersPage();
       case 2: return NotifPage();
       default: return ProfilPage(me);
