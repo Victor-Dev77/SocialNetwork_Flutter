@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_social/controller/detail_post.dart';
 import 'package:flutter_social/models/post.dart';
 import 'package:flutter_social/models/user.dart';
+import 'package:flutter_social/util/date_helper.dart';
+import 'package:flutter_social/util/fire_helper.dart';
 import 'package:flutter_social/view/my_material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -30,14 +33,8 @@ class PostTile extends StatelessWidget {
                 ProfileImage(urlString: user.imageUrl, onPressed: null),
                 Column(
                   children: <Widget>[
-                    MyText(
-                      "${user.surname} ${user.name}",
-                      color: baseAccent,
-                    ),
-                    MyText(
-                      "${post.date}",
-                      color: pointer,
-                    ),
+                    MyText("${user.surname} ${user.name}", color: baseAccent,),
+                    MyText(DateHelper().myDate(post.date), color: pointer,),
                   ],
                 ),
               ],
@@ -63,9 +60,15 @@ class PostTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                IconButton(icon: (post.likes.contains(me.uid) ? likeFull : likeEmpty), onPressed: null,),
+                IconButton(icon: (post.likes.contains(me.uid) ? likeFull : likeEmpty), onPressed: () => FireHelper().addLike(post),),
                 MyText(post.likes.length.toString(), color: baseAccent,),
-                IconButton(icon: msgIcon, onPressed: null,),
+                IconButton(icon: msgIcon, onPressed: () {
+                  if (!detail) {
+                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) {
+                      return DetailPost(post, user);
+                    }));
+                  }
+                },),
                 MyText(post.comments.length.toString(), color: baseAccent,),
               ],
             ),
